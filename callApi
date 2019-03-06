@@ -1,0 +1,32 @@
+import React, { Component } from "react";
+import axios from 'axios';
+
+const CancelToken = axios.CancelToken;
+let cancel;
+
+class abc extends Component {
+    componentDidMount() {
+        this.Api();
+    }
+    Api(){
+        if (cancel !== undefined) {
+            cancel()
+        }
+        axios.post(URL,reqBody,{cancelToken: new CancelToken(function executor(c) {
+                cancel = c;
+            })
+        }).then((response) => {
+           //Response Body
+        }).catch((error) => {
+            if (axios.isCancel(error)) {
+                console.log('post Request canceled');
+            }
+        });
+    }
+
+    render() {
+        return <h2> Cancel Axios Resuest </h2>
+    }
+}
+
+export default abc;
